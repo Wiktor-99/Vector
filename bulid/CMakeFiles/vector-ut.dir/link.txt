@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/vector-ut.dir/tests/main.ut.cpp.o CMakeFiles/vector-ut.dir/tests/vector.ut.cpp.o -o vector-ut 

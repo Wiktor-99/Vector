@@ -1,0 +1,3 @@
+/home/wiktor/Desktop/Vector/bulid/CMakeFiles/rebuild_cache.dir
+/home/wiktor/Desktop/Vector/bulid/CMakeFiles/vector-ut.dir
+/home/wiktor/Desktop/Vector/bulid/CMakeFiles/edit_cache.dir
