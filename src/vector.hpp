@@ -7,6 +7,7 @@
 
 template <typename T, typename Allocator = std::allocator<T>>
 class Vector {
+  public:
     using value_type = T;
 
   public:
@@ -14,31 +15,46 @@ class Vector {
         first_ = end_ = allocator_.allocate(defaultSize);
         realEnd_ = first_ + defaultSize;
     }
-    explicit Vector(std::size_t size, const value_type &value = T()) {
+    explicit Vector(std::size_t size, const T &value = T()) {
         first_ = allocator_.allocate(size);
         realEnd_ = end_ = first_ + size;
         rangeConstructor(first_, end_, value);
     }
+    Vector(const Vector<T> &other) {
+        std::size_t newSize = other.size();
+        auto newFirst = allocator_.allocate(other.capacity());
+        rangeDestructor(first_, end_);
+        allocator_.deallocate(first_, capacity());
+        first_ = newFirst;
+        end_ = first_ + newSize;
+        realEnd_ = first_ + other.capacity();
+        auto first = first_;
+        for (auto it =  other.begin(); it != other.end(); ++it){
+            *first = *it;
+            ++first;        
+        }
+       
+    }
     ~Vector() {
         rangeDestructor(first_, end_);
-        allocator_.deallocate(first_, realSize());
+        allocator_.deallocate(first_, capacity());
     }
     std::size_t size() const { return end_ - first_; }
-    auto begin() { return first_; }
-    auto end() { return end_; }
+    std::size_t capacity() const { return realEnd_ - first_; }
+    auto begin() const{ return first_; }
+    auto end() const{ return end_; }
 
   private:
     void rangeConstructor(T *first, T *end, const value_type &value = T()) {
         for (; first != end; ++first) {
-            new (first) value_type(value);
+            new (first) T(value);
         }
     }
     void rangeDestructor(T *first, T *end) {
         for (; first != end; ++first) {
-            first->~value_type();
+            first->~T();
         }
     }
-    std::size_t realSize() const { return realEnd_ - first_; }
 
   private:
     constexpr static std::size_t defaultSize = 4;
