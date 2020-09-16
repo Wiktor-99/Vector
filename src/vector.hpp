@@ -43,6 +43,13 @@ class Vector {
         }
         return *this;
     }
+    Vector<T> &operator=( Vector<int> &&other) {
+         first_ = other.first_;
+        end_ = other.end_;
+        realEnd_ = other.realEnd_;
+        other.first_ = other.realEnd_ = other.end_ = nullptr;
+        return *this;
+    }
     ~Vector() {
         rangeDestructor(first_, end_);
         allocator_.deallocate(first_, capacity());

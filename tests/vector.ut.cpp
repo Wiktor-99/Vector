@@ -98,3 +98,25 @@ TEST_CASE("Copy assignment operator, expression Vector<int> vec1(5,6) Vector<int
         REQUIRE(vec1.capacity() == vec2.capacity());
     }
 }
+TEST_CASE("Move assignment operator should move all meber values(pointers) to resul vector. Moved vector should be clear (size = 0 and capacity = 0 ),  begin() method shuld return nullptr"){
+    Vector<int> vector(4,8);
+    Vector<int> result;
+    Vector<int> expected(4,8);
+    result = std::move(vector);
+    SECTION("Vectors should not be equal."){
+        REQUIRE_FALSE(std::equal(vector.begin(), vector.end(), result.begin(), result.end()));
+    }
+    SECTION("Moved vector should has size eqaul to 0"){
+        REQUIRE(vector.size() == 0);
+    }
+    SECTION("Moved vector should has capacity equal to 0"){
+        REQUIRE(vector.capacity() == 0);
+    }
+    SECTION("Moved vector begin() method should be equal to nullptr"){
+        REQUIRE(!vector.begin());
+    }
+    SECTION("New vector should be equal to vectro<int>(4,8)"){
+        REQUIRE(std::equal(result.begin(),result.end(), expected.begin(),expected.end()));
+    }
+    
+}
