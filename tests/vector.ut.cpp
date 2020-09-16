@@ -22,3 +22,4 @@ TEST_CASE("Constructed Vector<int>(5) should contain only 0 values{0,0,0,0,0}"){
     Vector<int> vector(5);
     REQUIRE(std::equal(vector.begin(),vector.end(),expected,expected+5));
 }
+
