@@ -28,6 +28,13 @@ class Vector {
             ++first;
         }
     }
+    Vector(Vector<T>&& other){
+      first_ = other.first_;
+      end_ = other.end_;
+      realEnd_ = other.realEnd_;
+      other.first_ = other.realEnd_ = other.end_ = nullptr;
+    }
+
     ~Vector() {
         rangeDestructor(first_, end_);
         allocator_.deallocate(first_, capacity());
