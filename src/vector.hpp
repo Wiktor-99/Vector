@@ -10,6 +10,10 @@ class Vector {
     using value_type = T;
 
   public:
+    Vector() {
+        first_ = end_ = allocator_.allocate(defaultSize);
+        realEnd_ = first_ + defaultSize;
+    }
     explicit Vector(std::size_t size, const value_type &value = T()) {
         first_ = allocator_.allocate(size);
         realEnd_ = end_ = first_ + size;
@@ -37,6 +41,7 @@ class Vector {
     std::size_t realSize() const { return realEnd_ - first_; }
 
   private:
+    constexpr static std::size_t defaultSize = 4;
     Allocator allocator_ = {};
     value_type *first_ = {};
     value_type *end_ = {};
