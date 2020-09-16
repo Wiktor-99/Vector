@@ -84,3 +84,17 @@ TEST_CASE("Move ctor should move all meber values(pointers) to resul vector. Mov
     }
     
 }
+TEST_CASE("Copy assignment operator, expression Vector<int> vec1(5,6) Vector<int> vec2(ve1) should give same values, size and capacity.") {
+    Vector<int> vec1(5, 6);
+    Vector<int> vec2;
+    vec2 = vec1;
+    SECTION("Vectors should be equal on range.") {
+        REQUIRE(std::equal(vec1.begin(), vec1.end(), vec2.begin(), vec2.end()));
+    }
+    SECTION("Vectors should be same size.") {
+        REQUIRE(vec1.size() == vec2.size());
+    }
+    SECTION("Vectors should be same capacity") {
+        REQUIRE(vec1.capacity() == vec2.capacity());
+    }
+}

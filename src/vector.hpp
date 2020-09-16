@@ -28,13 +28,21 @@ class Vector {
             ++first;
         }
     }
-    Vector(Vector<T>&& other){
-      first_ = other.first_;
-      end_ = other.end_;
-      realEnd_ = other.realEnd_;
-      other.first_ = other.realEnd_ = other.end_ = nullptr;
+    Vector(Vector<T> &&other) {
+        first_ = other.first_;
+        end_ = other.end_;
+        realEnd_ = other.realEnd_;
+        other.first_ = other.realEnd_ = other.end_ = nullptr;
     }
-
+    Vector<T> &operator=(const Vector<int> &other) {
+        changeSizeAndClear(other);
+        auto first = first_;
+        for (auto it = other.begin(); it != other.end(); ++it) {
+            *first = *it;
+            ++first;
+        }
+        return *this;
+    }
     ~Vector() {
         rangeDestructor(first_, end_);
         allocator_.deallocate(first_, capacity());
