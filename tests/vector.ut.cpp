@@ -5,22 +5,37 @@
 #include "../src/vector.hpp"
 #include "catch.hpp"
 
-TEST_CASE("Construct Vector with Vector<int>(random_number) should give vectro.size() = random_number.") {
+TEST_CASE("Default ctor of Vector<int> should allocate give vectro.size() = 0 and vector.capacity() = 4.") {
+    const Vector<int> vector;
+    SECTION("Vector should has size equal to 0") {
+        REQUIRE(vector.size() == 0);
+    }
+    SECTION("Vector should has capacity equal to 4") {
+        REQUIRE(vector.capacity() == 4);
+    }
+}
+
+TEST_CASE("Construct Vector with Vector<int>(random_number) vector size sholud be equal to random_number and contain only 0 values") {
     std::random_device rd;
     std::mt19937 e{rd()};
 
     std::uniform_int_distribution<std::size_t> dist{
-        1, 10000000};
+        1, 10000};
     std::size_t random_number = dist(e);
-
     Vector<int> vector(random_number);
-    REQUIRE(vector.size() == random_number);
-}
-
-TEST_CASE("Constructed Vector<int>(5) should contain only 0 values{0,0,0,0,0}.") {
-    std::vector<int> expected(5);
-    Vector<int> vector(5);
-    REQUIRE(std::equal(vector.begin(), vector.end(), expected.begin(), expected.end()));
+    std::vector<int> expected(random_number);
+    SECTION("Vector size sholud be equal to random_number") {
+        REQUIRE(vector.size() == random_number);
+    }
+    SECTION("Vector should has same size as std::vector") {
+        REQUIRE(vector.size() == expected.size());
+    }
+    SECTION("Vector should has same capacity as std::vector") {
+        REQUIRE(vector.capacity() == expected.capacity());
+    }
+    SECTION("Vector should contain only 0 as std::vector") {
+        REQUIRE(std::equal(vector.begin(), vector.end(), expected.begin(), expected.end()));
+    }
 }
 TEST_CASE("Contructed Vectro<int>(5, random_value) should match with std::vectro<int>(5,random_value).") {
     std::random_device rd;
@@ -33,10 +48,6 @@ TEST_CASE("Contructed Vectro<int>(5, random_value) should match with std::vectro
     Vector<int> vector(5, random_value);
     std::vector<int> expected(5, random_value);
     REQUIRE(std::equal(vector.begin(), vector.end(), expected.begin(), expected.end()));
-}
-TEST_CASE("Default ctor of Vector<int> should allocate give vectro.size() = 0 and vector.capacity() = 4.") {
-    const Vector<int> vector;
-    REQUIRE(vector.size() == 0);
 }
 TEST_CASE("Copy ctor, expression Vector<int> vec1(5,6) Vector<int> vec2(ve1) should give same values, size and capacity.") {
     Vector<int> vec1(5, 6);
