@@ -21,7 +21,7 @@ class Vector {
         rangeConstructor(first_, end_, value);
     }
     Vector(const Vector<value_type> &other) {
-        changeSize(other);
+        changeSize(other.size(),other.capacity());
         auto first = first_;
         for (auto it = other.begin(); it != other.end(); ++it) {
             *first = *it;
@@ -35,7 +35,7 @@ class Vector {
         other.first_ = other.realEnd_ = other.end_ = nullptr;
     }
     Vector<T> &operator=(const Vector<value_type> &other) {
-        changeSize(other);
+        changeSize(other.size(),other.capacity());
         auto first = first_;
         for (auto it = other.begin(); it != other.end(); ++it) {
             *first = *it;
@@ -61,23 +61,19 @@ class Vector {
         new(end_) T(value);
         end_++;
     }
+    void push_back(value_type&& value){
+        if(end_ == realEnd_){
+            makeBigger();
+        }
+        new(end_) T(std::move(value));
+        end_++;
+    }
     std::size_t size() const { return end_ - first_; }
     std::size_t capacity() const { return realEnd_ - first_; }
     auto begin() const { return first_; }
     auto end() const { return end_; }
 
   private:
-    void changeSize(const Vector<value_type> &other) {
-        auto oldSize = size();
-        auto newFirst = allocator_.allocate(other.capacity());
-         for (size_t i = 0; i < oldSize; ++i)
-            new(newFirst + i) T(std::move(first_[i]));
-        rangeDestructor(first_, end_);
-        allocator_.deallocate(first_, capacity());
-        first_ = newFirst;
-        end_ = first_ + other.size();
-        realEnd_ = first_ + other.capacity();
-    }
      void changeSize(std::size_t newSize, std::size_t newCapacity) {
         auto oldSize = size();
         auto newFirst = allocator_.allocate(newCapacity);

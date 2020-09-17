@@ -122,7 +122,8 @@ TEST_CASE("Move assignment operator should move all meber values(pointers) to re
 }
 TEST_CASE("Vector push_back method test, for default ctor and push_back method size shuld be equal  1 and capacity 4"){
     Vector<int> vector;
-    vector.push_back(1);
+    int x = 1;
+    vector.push_back(x);
     SECTION("Vector size sholud be equal 1"){
         REQUIRE(vector.size() == 1);
     }
@@ -131,8 +132,30 @@ TEST_CASE("Vector push_back method test, for default ctor and push_back method s
     }   
 }
 TEST_CASE("Vector push_back when size(5) is equal capacity(5) should resize to size+1(6) and capcity x 2(10) "){
+    Vector<int> vector;
+    int x = 1;
+    vector.push_back(x);
+    SECTION("Vector size sholud be equal 1"){
+        REQUIRE(vector.size() == 6);
+    }
+    SECTION("Vector capacity sholud be equal 4"){
+        REQUIRE(vector.capacity() == 10);
+    }     
+
+}
+TEST_CASE("Vector push_back(for r-value) method test, for default ctor and push_back method size shuld be equal  1 and capacity 4"){
+    Vector<int> vector;
+    vector.push_back(1);
+    SECTION("Vector size sholud be equal 1"){
+        REQUIRE(vector.size() == 1);
+    }
+    SECTION("Vector capacity sholud be equal 4"){
+        REQUIRE(vector.capacity() == 4);
+    }   
+}
+TEST_CASE("Vector push_back(for r-value) when size(5) is equal capacity(5) should resize to size+1(6) and capcity x 2(10) "){
     Vector<int> vector(5,1);
-     vector.push_back(1);
+    vector.push_back(1);
     SECTION("Vector size sholud be equal 1"){
         REQUIRE(vector.size() == 6);
     }
