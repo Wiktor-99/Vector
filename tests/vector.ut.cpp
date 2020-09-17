@@ -63,26 +63,25 @@ TEST_CASE("Copy ctor, expression Vector<int> vec1(5,6) Vector<int> vec2(ve1) sho
     }
 }
 
-TEST_CASE("Move ctor should move all meber values(pointers) to resul vector. Moved vector should be clear (size = 0 and capacity = 0 ),  begin() method shuld return nullptr"){
-    Vector<int> vector(4,8);
+TEST_CASE("Move ctor should move all meber values(pointers) to resul vector. Moved vector should be clear (size = 0 and capacity = 0 ),  begin() method shuld return nullptr") {
+    Vector<int> vector(4, 8);
     Vector<int> result(std::move(vector));
-    Vector<int> expected(4,8);
-    SECTION("Vectors should not be equal."){
+    Vector<int> expected(4, 8);
+    SECTION("Vectors should not be equal.") {
         REQUIRE_FALSE(std::equal(vector.begin(), vector.end(), result.begin(), result.end()));
     }
-    SECTION("Moved vector should has size eqaul to 0"){
+    SECTION("Moved vector should has size eqaul to 0") {
         REQUIRE(vector.size() == 0);
     }
-    SECTION("Moved vector should has capacity equal to 0"){
+    SECTION("Moved vector should has capacity equal to 0") {
         REQUIRE(vector.capacity() == 0);
     }
-    SECTION("Moved vector begin() method should be equal to nullptr"){
+    SECTION("Moved vector begin() method should be equal to nullptr") {
         REQUIRE(!vector.begin());
     }
-    SECTION("New vector should be equal to vectro<int>(4,8)"){
-        REQUIRE(std::equal(result.begin(),result.end(), expected.begin(),expected.end()));
+    SECTION("New vector should be equal to vectro<int>(4,8)") {
+        REQUIRE(std::equal(result.begin(), result.end(), expected.begin(), expected.end()));
     }
-    
 }
 TEST_CASE("Copy assignment operator, expression Vector<int> vec1(5,6) Vector<int> vec2(ve1) should give same values, size and capacity.") {
     Vector<int> vec1(5, 6);
@@ -98,81 +97,97 @@ TEST_CASE("Copy assignment operator, expression Vector<int> vec1(5,6) Vector<int
         REQUIRE(vec1.capacity() == vec2.capacity());
     }
 }
-TEST_CASE("Move assignment operator should move all meber values(pointers) to resul vector. Moved vector should be clear (size = 0 and capacity = 0 ),  begin() method shuld return nullptr"){
-    Vector<int> vector(4,8);
+TEST_CASE("Move assignment operator should move all meber values(pointers) to resul vector. Moved vector should be clear (size = 0 and capacity = 0 ),  begin() method shuld return nullptr") {
+    Vector<int> vector(4, 8);
     Vector<int> result;
-    Vector<int> expected(4,8);
+    Vector<int> expected(4, 8);
     result = std::move(vector);
-    SECTION("Vectors should not be equal."){
+    SECTION("Vectors should not be equal.") {
         REQUIRE_FALSE(std::equal(vector.begin(), vector.end(), result.begin(), result.end()));
     }
-    SECTION("Moved vector should has size eqaul to 0"){
+    SECTION("Moved vector should has size eqaul to 0") {
         REQUIRE(vector.size() == 0);
     }
-    SECTION("Moved vector should has capacity equal to 0"){
+    SECTION("Moved vector should has capacity equal to 0") {
         REQUIRE(vector.capacity() == 0);
     }
-    SECTION("Moved vector begin() method should be equal to nullptr"){
+    SECTION("Moved vector begin() method should be equal to nullptr") {
         REQUIRE(!vector.begin());
     }
-    SECTION("New vector should be equal to vectro<int>(4,8)"){
-        REQUIRE(std::equal(result.begin(),result.end(), expected.begin(),expected.end()));
+    SECTION("New vector should be equal to vectro<int>(4,8)") {
+        REQUIRE(std::equal(result.begin(), result.end(), expected.begin(), expected.end()));
     }
-    
 }
-TEST_CASE("Vector push_back method test, for default ctor and push_back method size shuld be equal  1 and capacity 4"){
+TEST_CASE("Vector push_back method test, for default ctor and push_back method size shuld be equal  1 and capacity 4") {
     Vector<int> vector;
     int x = 1;
     vector.push_back(x);
-    SECTION("Vector size sholud be equal 1"){
+    SECTION("Vector size sholud be equal 1") {
         REQUIRE(vector.size() == 1);
     }
-    SECTION("Vector capacity sholud be equal 4"){
+    SECTION("Vector capacity sholud be equal 4") {
         REQUIRE(vector.capacity() == 4);
-    }   
+    }
 }
-TEST_CASE("Vector push_back when size(5) is equal capacity(5) should resize to size+1(6) and capcity x 2(10) "){
+TEST_CASE("Vector push_back when size(5) is equal capacity(5) should resize to size+1(6) and capcity x 2(10) ") {
     Vector<int> vector;
     int x = 1;
     vector.push_back(x);
-    SECTION("Vector size sholud be equal 1"){
+    SECTION("Vector size sholud be equal 1") {
         REQUIRE(vector.size() == 1);
     }
-    SECTION("Vector capacity sholud be equal 4"){
+    SECTION("Vector capacity sholud be equal 4") {
         REQUIRE(vector.capacity() == 4);
-    }     
-
+    }
 }
-TEST_CASE("Vector push_back(for r-value) method test, for default ctor and push_back method size shuld be equal  1 and capacity 4"){
+TEST_CASE("Vector push_back(for r-value) method test, for default ctor and push_back method size shuld be equal  1 and capacity 4") {
     Vector<int> vector;
     vector.push_back(1);
-    SECTION("Vector size sholud be equal 1"){
+    SECTION("Vector size sholud be equal 1") {
         REQUIRE(vector.size() == 1);
     }
-    SECTION("Vector capacity sholud be equal 4"){
+    SECTION("Vector capacity sholud be equal 4") {
         REQUIRE(vector.capacity() == 4);
-    }   
+    }
 }
-TEST_CASE("Vector push_back(for r-value) when size(5) is equal capacity(5) should resize to size+1(6) and capcity x 2(10) "){
-    Vector<int> vector(5,1);
+TEST_CASE("Vector push_back(for r-value) when size(5) is equal capacity(5) should resize to size+1(6) and capcity x 2(10)") {
+    Vector<int> vector(5, 1);
     vector.push_back(1);
-    SECTION("Vector size sholud be equal 1"){
+    SECTION("Vector size sholud be equal 1") {
         REQUIRE(vector.size() == 6);
     }
-    SECTION("Vector capacity sholud be equal 4"){
+    SECTION("Vector capacity sholud be equal 4") {
         REQUIRE(vector.capacity() == 10);
-    }     
-
+    }
 }
 
-TEST_CASE("Non const front, back method should change values first and last values"){
-    Vector<int> vector(5,1);
+TEST_CASE("Non const front, back method should change values first and last values") {
+    Vector<int> vector(5, 1);
     vector.front() = 98;
     vector.back() = 10001;
-    SECTION("Vector size sholud be equal 1"){
+    SECTION("Vector size sholud be equal 1") {
         REQUIRE(vector.front() == 98);
     }
-    SECTION("Vector capacity sholud be equal 4"){
+    SECTION("Vector capacity sholud be equal 4") {
         REQUIRE(vector.back() == 10001);
-    }   
+    }
+}
+TEST_CASE("Vector operator[] with index control for Vector<int> vector(1,2,3,5) should give vector[0] = 1, vector[2] = 3 and for vector[4] should throw expetion"){
+    Vector<int> vector;
+    vector.push_back(1);
+    vector.push_back(2);
+    vector.push_back(3);
+    vector.push_back(5);
+    SECTION("Vector[0] should give 1"){
+        REQUIRE(vector[0] == 1);
+    }
+    SECTION("Vector[2] should give 3"){
+        REQUIRE(vector[2] == 3);
+    }
+    SECTION("Vector[5] should throw exeption"){
+        REQUIRE_THROWS(vector[5]);
+    }
+    SECTION("Vector[-1] should throw exeption"){
+        REQUIRE_THROWS(vector[5]);
+    }
 }

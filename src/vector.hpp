@@ -4,6 +4,7 @@
 
 #include <algorithm>
 #include <iterator>
+#include <stdexcept> 
 
 template <typename T, typename Allocator = std::allocator<T>>
 class Vector {
@@ -21,7 +22,7 @@ class Vector {
         rangeConstructor(first_, end_, value);
     }
     Vector(const Vector<value_type> &other) {
-        changeSize(other.size(),other.capacity());
+        changeSize(other.size(), other.capacity());
         auto first = first_;
         for (auto it = other.begin(); it != other.end(); ++it) {
             *first = *it;
@@ -35,7 +36,7 @@ class Vector {
         other.first_ = other.realEnd_ = other.end_ = nullptr;
     }
     Vector<T> &operator=(const Vector<value_type> &other) {
-        changeSize(other.size(),other.capacity());
+        changeSize(other.size(), other.capacity());
         auto first = first_;
         for (auto it = other.begin(); it != other.end(); ++it) {
             *first = *it;
@@ -43,8 +44,8 @@ class Vector {
         }
         return *this;
     }
-    Vector<T> &operator=( Vector<value_type> &&other) {
-         first_ = other.first_;
+    Vector<T> &operator=(Vector<value_type> &&other) {
+        first_ = other.first_;
         end_ = other.end_;
         realEnd_ = other.realEnd_;
         other.first_ = other.realEnd_ = other.end_ = nullptr;
@@ -54,39 +55,44 @@ class Vector {
         rangeDestructor(first_, end_);
         allocator_.deallocate(first_, capacity());
     }
-    void push_back(const value_type& value){
-        if(end_ == realEnd_){
+    void push_back(const value_type &value) {
+        if (end_ == realEnd_) {
             makeBigger();
         }
-        new(end_) T(value);
+        new (end_) T(value);
         end_++;
     }
-    void push_back(value_type&& value){
-        if(end_ == realEnd_){
+    void push_back(value_type &&value) {
+        if (end_ == realEnd_) {
             makeBigger();
         }
-        new(end_) T(std::move(value));
+        new (end_) T(std::move(value));
         end_++;
     }
-    value_type& front() { return *first_; }
-    value_type& back() { return *(end_ - 1); }
+    value_type &front() { return *first_; }
+    value_type &back() { return *(end_ - 1); }
 
-    const value_type& front() const { return *first_; }
-    const value_type& back() const { return *(end_ - 1); }
+    const value_type &front() const { return *first_; }
+    const value_type &back() const { return *(end_ - 1); }
 
+    const value_type& operator[](std::size_t index)const{
+        if(index >= size() || index < 0){
+            throw std::out_of_range("Index is out of range.");
+        }
+        return *(first_+index);
+    }
 
-    
     std::size_t size() const { return end_ - first_; }
     std::size_t capacity() const { return realEnd_ - first_; }
     auto begin() const { return first_; }
     auto end() const { return end_; }
 
   private:
-     void changeSize(std::size_t newSize, std::size_t newCapacity) {
+    void changeSize(std::size_t newSize, std::size_t newCapacity) {
         auto oldSize = size();
         auto newFirst = allocator_.allocate(newCapacity);
-         for (size_t i = 0; i < oldSize; ++i)
-            new(newFirst + i) T(std::move(first_[i]));
+        for (size_t i = 0; i < oldSize; ++i)
+            new (newFirst + i) T(std::move(first_[i]));
         rangeDestructor(first_, end_);
         allocator_.deallocate(first_, capacity());
         first_ = newFirst;
@@ -103,10 +109,10 @@ class Vector {
             first->~T();
         }
     }
-    void makeBigger(){
+    void makeBigger() {
         auto oldSize = size();
         auto newSize = (oldSize == 0) ? 1 : 2 * oldSize;
-        changeSize(oldSize,newSize);
+        changeSize(oldSize, newSize);
     }
 
   private:
