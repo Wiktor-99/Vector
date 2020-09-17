@@ -51,6 +51,14 @@ class Vector {
         other.first_ = other.realEnd_ = other.end_ = nullptr;
         return *this;
     }
+    Vector(const std::initializer_list<value_type>& list){
+        changeSize(list.size(),list.size());
+        auto first = first_;
+        for (auto it = list.begin(); it != list.end(); ++it) {
+            *first = *it;
+             ++first;
+        }
+    }
     ~Vector() {
         rangeDestructor(first_, end_);
         allocator_.deallocate(first_, capacity());
@@ -81,7 +89,6 @@ class Vector {
         }
         return *(first_+index);
     }
-
     std::size_t size() const { return end_ - first_; }
     std::size_t capacity() const { return realEnd_ - first_; }
     auto begin() const { return first_; }

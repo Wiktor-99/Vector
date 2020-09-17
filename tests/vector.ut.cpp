@@ -1,9 +1,9 @@
 
-#include <random>
-#include <vector>
-
 #include "../src/vector.hpp"
 #include "catch.hpp"
+#include <initializer_list>
+#include <random>
+#include <vector>
 
 TEST_CASE("Default ctor of Vector<int> should allocate give vectro.size() = 0 and vector.capacity() = 4.") {
     const Vector<int> vector;
@@ -172,22 +172,36 @@ TEST_CASE("Non const front, back method should change values first and last valu
         REQUIRE(vector.back() == 10001);
     }
 }
-TEST_CASE("Vector operator[] with index control for Vector<int> vector(1,2,3,5) should give vector[0] = 1, vector[2] = 3 and for vector[4] should throw expetion"){
+TEST_CASE("Vector operator[] with index control for Vector<int> vector(1,2,3,5) should give vector[0] = 1, vector[2] = 3 and for vector[4] should throw expetion") {
     Vector<int> vector;
     vector.push_back(1);
     vector.push_back(2);
     vector.push_back(3);
     vector.push_back(5);
-    SECTION("Vector[0] should give 1"){
+    SECTION("Vector[0] should give 1") {
         REQUIRE(vector[0] == 1);
     }
-    SECTION("Vector[2] should give 3"){
+    SECTION("Vector[2] should give 3") {
         REQUIRE(vector[2] == 3);
     }
-    SECTION("Vector[5] should throw exeption"){
+    SECTION("Vector[5] should throw exeption") {
         REQUIRE_THROWS(vector[5]);
     }
-    SECTION("Vector[-1] should throw exeption"){
+    SECTION("Vector[-1] should throw exeption") {
         REQUIRE_THROWS(vector[5]);
+    }
+}
+TEST_CASE("Vector ctor initializer_list{1,2,3} should construct vector that contains {1,2,3,4}") {
+    std::initializer_list<int> list{1, 2, 3};
+    std::vector<int> expected(list);
+    Vector<int> vector(list);
+    SECTION("vector[0] should be equal 1") {
+        REQUIRE(vector[0] == 1);
+    }
+    SECTION("vector[0] should be equal 2") {
+        REQUIRE(vector[1] == 2);
+    }
+    SECTION("vector[0] should be equal 3") {
+        REQUIRE(vector[2] == 3);
     }
 }
