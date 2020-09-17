@@ -136,10 +136,10 @@ TEST_CASE("Vector push_back when size(5) is equal capacity(5) should resize to s
     int x = 1;
     vector.push_back(x);
     SECTION("Vector size sholud be equal 1"){
-        REQUIRE(vector.size() == 6);
+        REQUIRE(vector.size() == 1);
     }
     SECTION("Vector capacity sholud be equal 4"){
-        REQUIRE(vector.capacity() == 10);
+        REQUIRE(vector.capacity() == 4);
     }     
 
 }
@@ -163,4 +163,16 @@ TEST_CASE("Vector push_back(for r-value) when size(5) is equal capacity(5) shoul
         REQUIRE(vector.capacity() == 10);
     }     
 
+}
+
+TEST_CASE("Non const front, back method should change values first and last values"){
+    Vector<int> vector(5,1);
+    vector.front() = 98;
+    vector.back() = 10001;
+    SECTION("Vector size sholud be equal 1"){
+        REQUIRE(vector.front() == 98);
+    }
+    SECTION("Vector capacity sholud be equal 4"){
+        REQUIRE(vector.back() == 10001);
+    }   
 }

@@ -68,6 +68,14 @@ class Vector {
         new(end_) T(std::move(value));
         end_++;
     }
+    value_type& front() { return *first_; }
+    value_type& back() { return *(end_ - 1); }
+
+    const value_type& front() const { return *first_; }
+    const value_type& back() const { return *(end_ - 1); }
+
+
+    
     std::size_t size() const { return end_ - first_; }
     std::size_t capacity() const { return realEnd_ - first_; }
     auto begin() const { return first_; }
