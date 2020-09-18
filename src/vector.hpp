@@ -141,13 +141,13 @@ class Vector {
     std::size_t size() const { return end_ - first_; }
     std::size_t capacity() const { return realEnd_ - first_; }
 
-    auto begin() const { return myIteratorImpl<false>(first_); }
-    auto end() const { return myIteratorImpl<false>(end_); }
+    iterator begin() const { return iterator(first_); }
+    iterator end() const { return iterator(end_); }
 
-    auto cbegin() const {
-        return myIteratorImpl<true>(first_);
+    const_iterator cbegin() const {
+        return const_iterator(first_);
     }
-    auto cend() const { return myIteratorImpl<true>(end_); }
+    const_iterator cend() const { return const_iterator(end_); }
 
   private:
     void changeSize(std::size_t newSize, std::size_t newCapacity) {

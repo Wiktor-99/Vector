@@ -229,46 +229,52 @@
 //         REQUIRE(!result.has_value());
 //     }
 // }
- TEST_CASE("Iterator to begin of vector after using * opeartor should show first element of vector. Iterator++ and ++Iteratot should move iterator forward."){
-    Vector<int> vec{1,2,3,4,5,6};
+TEST_CASE("Iterator to begin of vector after using * opeartor should show first element of vector. Iterator++ and ++Iteratot should move iterator forward.") {
+    Vector<int> vec{1, 2, 3, 4, 5, 6};
     Vector<int>::iterator it = vec.begin();
     Vector<int>::const_iterator cit = vec.cbegin();
-    SECTION("Iterator *to begin shoud be equal 1"){
+    SECTION("Iterator *to begin shoud be equal 1") {
         REQUIRE(*it == 1);
-    } 
-    SECTION("Const_iterator *to begin shoud be equal 1"){
+    }
+    SECTION("Const_iterator *to begin shoud be equal 1") {
         REQUIRE(*cit == 1);
-    }   
-    SECTION("Preincrementation  iterator and use operator *to begin shoud be equal 2"){
+    }
+    SECTION("Preincrementation  iterator and use operator *to begin shoud be equal 2") {
         ++it;
         REQUIRE(*it == 2);
-    } 
-    SECTION("Preincrementation  const_iterator and use operator *to begin shoud be equal 2"){
+    }
+    SECTION("Preincrementation  const_iterator and use operator *to begin shoud be equal 2") {
         ++cit;
         REQUIRE(*cit == 2);
     }
-    SECTION("Postincrementation  iterator and use operator *to begin shoud be equal 2"){
+    SECTION("Postincrementation  iterator and use operator *to begin shoud be equal 2") {
         it++;
         REQUIRE(*it == 2);
-    } 
-    SECTION("Postincrementation  const_iterator and use operator *to begin shoud be equal 2"){
+    }
+    SECTION("Postincrementation  const_iterator and use operator *to begin shoud be equal 2") {
         cit++;
         REQUIRE(*cit == 2);
-    }  
- }
- TEST_CASE("Iterator to end and --Iterator and Iterator-- should give last element of given vector"){
-    Vector<int> vec{1,2,3,4,5,6};
+    }
+}
+TEST_CASE("Iterator to end and --Iterator and Iterator-- should give last element of given vector") {
+    Vector<int> vec{1, 2, 3, 4, 5, 6};
     Vector<int>::iterator it = vec.end();
     Vector<int>::const_iterator cit = vec.cend();
-   
-  
-    SECTION("Predecrementation  iterator and use operator *to begin shoud be equal 6"){
+
+    SECTION("Predecrementation  iterator and use operator *to it shoud be equal 6") {
         --it;
         REQUIRE(*it == 6);
-    } 
-    SECTION("Predecrementation  const_iterator and use operator *to begin shoud be equal 6"){
+    }
+    SECTION("Predecrementation  const_iterator and use operator *to cit shoud be equal 6") {
         --cit;
         REQUIRE(*cit == 6);
     }
-   
- }
+    SECTION("Postdecrementation  iterator and use operator *to it shoud be equal 6") {
+        --it;
+        REQUIRE(*it == 6);
+    }
+    SECTION("Postdecrementation  const_iterator and use operator *to cit shoud be equal 6") {
+        --cit;
+        REQUIRE(*cit == 6);
+    }
+}
