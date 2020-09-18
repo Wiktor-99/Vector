@@ -26,9 +26,12 @@ class Vector {
         reference operator*() const {
             return *ptr_;
         }
-
         pointer operator->() const {
             return ptr_;
+        }
+        myIteratorImpl &operator++() {
+            ptr_++;
+            return *this;
         }
 
       private:

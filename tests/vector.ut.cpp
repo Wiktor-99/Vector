@@ -232,7 +232,19 @@
  TEST_CASE("Iterator to begin of vector after using * opeartor should show first element of vector"){
     Vector<int> vec{1,2,3,4,5,6};
     Vector<int>::iterator it = vec.begin();
+    Vector<int>::const_iterator cit = vec.cbegin();
     SECTION("Iterator *to begin shoud be equal 1"){
         REQUIRE(*it == 1);
+    } 
+    SECTION("Const_iterator *to begin shoud be equal 1"){
+        REQUIRE(*cit == 1);
     }   
+    SECTION("Preincrementation  iterator and use operator *to begin shoud be equal 2"){
+        ++it;
+        REQUIRE(*it == 2);
+    } 
+    SECTION("Preincrementation  const_iterator and use operator *to begin shoud be equal 2"){
+        ++cit;
+        REQUIRE(*cit == 2);
+    }  
  }
