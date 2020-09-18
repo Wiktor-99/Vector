@@ -246,5 +246,13 @@
     SECTION("Preincrementation  const_iterator and use operator *to begin shoud be equal 2"){
         ++cit;
         REQUIRE(*cit == 2);
+    }
+    SECTION("Postincrementation  iterator and use operator *to begin shoud be equal 2"){
+        it++;
+        REQUIRE(*it == 2);
+    } 
+    SECTION("Postincrementation  const_iterator and use operator *to begin shoud be equal 2"){
+        cit++;
+        REQUIRE(*cit == 2);
     }  
  }

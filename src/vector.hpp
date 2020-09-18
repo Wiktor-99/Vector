@@ -21,7 +21,7 @@ class Vector {
         using pointer = typename std::conditional_t<isConst, T const *, T *>;
 
       public:
-        explicit myIteratorImpl(T *ptr) : ptr_(reinterpret_cast<pointer>(ptr)) {}
+        explicit myIteratorImpl(pointer ptr) : ptr_(ptr) {}
         myIteratorImpl() : ptr_(nullptr) {}
         reference operator*() const {
             return *ptr_;
@@ -33,6 +33,11 @@ class Vector {
             ptr_++;
             return *this;
         }
+        myIteratorImpl operator++(int) {
+            myIteratorImpl result(ptr_);
+            ptr_++;
+            return result;
+        }
 
       private:
         pointer ptr_;
@@ -41,7 +46,7 @@ class Vector {
   public:
     using value_type = T;
     using iterator = myIteratorImpl<false>;
-    using const_iterator =myIteratorImpl<true>;
+    using const_iterator = myIteratorImpl<true>;
 
   public:
     Vector() {
