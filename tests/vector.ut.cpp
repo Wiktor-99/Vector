@@ -301,25 +301,41 @@ TEST_CASE("Iterator end -= 2  with * operator should be equal to 5") {
     }
     SECTION("Const_iterator end -= 2  with * operator should be equal to 5") {
         cit -= 2;
-        REQUIRE(*cit == 5);
+        REQUIRE(*cit == 5); /*  */
     }
 }
 TEST_CASE("Iterator *(begin() + 2)  should be equal to 3") {
     Vector<int> vec{1, 2, 3, 4, 5, 6};
 
     SECTION("Iterator *(begin() + 2) should be equal to 3") {
-        REQUIRE(*(vec.begin()+2) == 3);
+        REQUIRE(*(vec.begin() + 2) == 3);
     }
     SECTION("Const_iterator *(begin() + 2) should be equal to 3") {
-        REQUIRE(*(vec.cbegin()+2) == 3);
+        REQUIRE(*(vec.cbegin() + 2) == 3);
     }
 }
 TEST_CASE("Iterator *(end() - 3) should be equal to 4") {
     Vector<int> vec{1, 2, 3, 4, 5, 6};
     SECTION("Iterator *(end() - 3) should be equal to 4") {
-        REQUIRE(*(vec.end()-3) == 4);
+        REQUIRE(*(vec.end() - 3) == 4);
     }
     SECTION("Const_iterator *(end() - 3) should be equal to 4") {
-         REQUIRE(*(vec.cend()-3) == 4);
+        REQUIRE(*(vec.cend() - 3) == 4);
+    }
+}
+TEST_CASE("Vector.begin() and Vector.end() should be equal for empty vector and not equal for vector with elements") {
+    Vector<int> empty;
+    Vector<int> notEmpty{1,2,3,4};
+    SECTION("Vector.begin() and Vector.end() should be equal for empty vector, compared by == "){
+        REQUIRE(empty.begin() == empty.end());
+    }
+    SECTION("Vector.begin() and Vector.end() should be equal for empty vector, compared by != "){
+        REQUIRE_FALSE(empty.begin() != empty.end());
+    }
+    SECTION("Vector.begin() and Vector.end() should not  be equal for vector with element, compared by == "){
+        REQUIRE_FALSE(notEmpty.begin() == notEmpty.end());
+    }
+    SECTION("Vector.begin() and Vector.end() should not be equal for vector with elements, compared by != "){
+        REQUIRE(notEmpty.begin() != notEmpty.end());
     }
 }

@@ -60,7 +60,12 @@ class Vector {
             result.ptr_ -= value;
             return result;
         }
-        
+        bool operator==(myIteratorImpl other)const {
+            return (ptr_ == other.ptr_);
+        }
+        bool operator!=(myIteratorImpl other)const {
+            return !(*this == other);
+        }
 
       private:
         pointer ptr_;
