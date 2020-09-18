@@ -46,6 +46,10 @@ class Vector {
             ptr_ += value;
             return *this;
         }
+        myIteratorImpl &operator-=(int value) {
+            ptr_ -= value;
+            return *this;
+        }
 
       private:
         pointer ptr_;

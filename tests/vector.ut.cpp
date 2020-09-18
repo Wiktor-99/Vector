@@ -278,7 +278,6 @@ TEST_CASE("Iterator to end and --Iterator and Iterator-- should give last elemen
         REQUIRE(*cit == 6);
     }
 }
-
 TEST_CASE("Iterator begin += 3 should with * operator should be equal to 4") {
     Vector<int> vec{1, 2, 3, 4, 5, 6};
     Vector<int>::iterator it = vec.begin();
@@ -290,5 +289,18 @@ TEST_CASE("Iterator begin += 3 should with * operator should be equal to 4") {
     SECTION("Const_iterator begin += 3 should with * operator should be equal to 4") {
         cit += 3;
         REQUIRE(*cit == 4);
+    }
+}
+TEST_CASE("Iterator end -= 2 should with * operator should be equal to 5") {
+    Vector<int> vec{1, 2, 3, 4, 5, 6};
+    Vector<int>::iterator it = vec.end();
+    Vector<int>::const_iterator cit = vec.cend();
+    SECTION("Iterator end -= 2 should with * operator should be equal to 5") {
+        it -= 2;
+        REQUIRE(*it == 5);
+    }
+    SECTION("Const_iterator end -= 2 should with * operator should be equal to 5") {
+        cit -= 2;
+        REQUIRE(*cit == 5);
     }
 }
