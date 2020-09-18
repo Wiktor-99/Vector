@@ -3,14 +3,42 @@
 #include <cstddef>
 
 #include <algorithm>
-#include <iterator>
-#include <stdexcept> 
 #include <initializer_list>
+#include <iterator>
+#include <stdexcept>
+#include <type_traits>
 
 template <typename T, typename Allocator = std::allocator<T>>
 class Vector {
   public:
+    template <bool isConst>
+    class myIteratorImpl {
+      public:
+        using iterator_category = std::random_access_iterator_tag;
+        using value_type = T;
+        using difference_type = std::ptrdiff_t;
+        using reference = typename std::conditional_t<isConst, T const &, T &>;
+        using pointer = typename std::conditional_t<isConst, T const *, T *>;
+
+      public:
+        explicit myIteratorImpl(T *ptr) : ptr_(reinterpret_cast<pointer>(ptr)) {}
+        myIteratorImpl() : ptr_(nullptr) {}
+        reference operator*() const {
+            return *ptr_;
+        }
+
+        pointer operator->() const {
+            return ptr_;
+        }
+
+      private:
+        pointer ptr_;
+    };
+
+  public:
     using value_type = T;
+    using iterator = myIteratorImpl<false>;
+    using const_iterator =myIteratorImpl<true>;
 
   public:
     Vector() {
@@ -52,12 +80,12 @@ class Vector {
         other.first_ = other.realEnd_ = other.end_ = nullptr;
         return *this;
     }
-    Vector(const std::initializer_list<value_type>& list){
-        changeSize(list.size(),list.size());
+    Vector(const std::initializer_list<value_type> &list) {
+        changeSize(list.size(), list.size());
         auto first = first_;
         for (auto it = list.begin(); it != list.end(); ++it) {
             *first = *it;
-             ++first;
+            ++first;
         }
     }
     ~Vector() {
@@ -78,11 +106,11 @@ class Vector {
         new (end_) T(std::move(value));
         end_++;
     }
-    std::optional<value_type> pop_back(){
-        if(size() > 0){
+    std::optional<value_type> pop_back() {
+        if (size() > 0) {
             end_ -= 1;
             value_type temp = *end_;
-            return temp;  
+            return temp;
         }
         return std::nullopt;
     }
@@ -92,16 +120,22 @@ class Vector {
     const value_type &front() const { return *first_; }
     const value_type &back() const { return *(end_ - 1); }
 
-    const value_type& operator[](std::size_t index)const{
-        if(index >= size() || index < 0){
+    const value_type &operator[](std::size_t index) const {
+        if (index >= size() || index < 0) {
             throw std::out_of_range("Index is out of range.");
         }
-        return *(first_+index);
+        return *(first_ + index);
     }
     std::size_t size() const { return end_ - first_; }
     std::size_t capacity() const { return realEnd_ - first_; }
-    auto begin() const { return first_; }
-    auto end() const { return end_; }
+
+    auto begin() const { return myIteratorImpl<false>(first_); }
+    auto end() const { return myIteratorImpl<false>(end_); }
+
+    auto cbegin() const {
+        return myIteratorImpl<true>(first_);
+    }
+    auto cend() const { return myIteratorImpl<true>(end_); }
 
   private:
     void changeSize(std::size_t newSize, std::size_t newCapacity) {
