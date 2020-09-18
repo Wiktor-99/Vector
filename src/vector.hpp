@@ -38,6 +38,10 @@ class Vector {
             ptr_++;
             return result;
         }
+        myIteratorImpl &operator--() {
+            ptr_--;
+            return *this;
+        }
 
       private:
         pointer ptr_;

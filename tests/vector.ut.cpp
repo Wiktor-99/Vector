@@ -229,7 +229,7 @@
 //         REQUIRE(!result.has_value());
 //     }
 // }
- TEST_CASE("Iterator to begin of vector after using * opeartor should show first element of vector"){
+ TEST_CASE("Iterator to begin of vector after using * opeartor should show first element of vector. Iterator++ and ++Iteratot should move iterator forward."){
     Vector<int> vec{1,2,3,4,5,6};
     Vector<int>::iterator it = vec.begin();
     Vector<int>::const_iterator cit = vec.cbegin();
@@ -255,4 +255,20 @@
         cit++;
         REQUIRE(*cit == 2);
     }  
+ }
+ TEST_CASE("Iterator to end and --Iterator and Iterator-- should give last element of given vector"){
+    Vector<int> vec{1,2,3,4,5,6};
+    Vector<int>::iterator it = vec.end();
+    Vector<int>::const_iterator cit = vec.cend();
+   
+  
+    SECTION("Predecrementation  iterator and use operator *to begin shoud be equal 6"){
+        --it;
+        REQUIRE(*it == 6);
+    } 
+    SECTION("Predecrementation  const_iterator and use operator *to begin shoud be equal 6"){
+        --cit;
+        REQUIRE(*cit == 6);
+    }
+   
  }
