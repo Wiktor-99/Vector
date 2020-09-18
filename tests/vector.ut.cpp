@@ -1,7 +1,7 @@
 
 #include "../src/vector.hpp"
 #include "catch.hpp"
-#include <initializer_list>
+#include<iostream>
 #include <random>
 #include <vector>
 
@@ -203,5 +203,35 @@ TEST_CASE("Vector ctor initializer_list{1,2,3} should construct vector that cont
     }
     SECTION("vector[0] should be equal 3") {
         REQUIRE(vector[2] == 3);
+    }
+}
+TEST_CASE("Using pop_back method for should change Vector<int>{1,2,3,4} to Vector<int>{1,2,3} and return 4. If vector is empty should return std:nullopt"){
+    Vector<int> vector{1,2,3,4};
+    std::vector<int> expected{1,2,3};
+    auto result = vector.pop_back();
+    SECTION("Vector<int>{1,2,3,4} after pop_back should be equal to Vector<int>{1,2,3}"){
+        REQUIRE(*result == 4);
+    }
+    SECTION("Vector<int>{1,2,3,4} after pop_back should be equal to Vector<int>{1,2,3}"){
+        REQUIRE(std::equal(expected.begin(),expected.end(), vector.begin(), vector.end()));
+    }
+    vector.pop_back();
+    expected.pop_back();
+    SECTION("Vector<int>{1,2,3} after pop_back should be equal to Vector<int>{1,2}"){
+        REQUIRE(std::equal(expected.begin(),expected.end(), vector.begin(), vector.end()));
+    }
+    vector.pop_back();
+    expected.pop_back();
+    SECTION("Vector<int>{1,2} after pop_back should be equal to Vector<int>{1}"){
+        REQUIRE(std::equal(expected.begin(),expected.end(), vector.begin(), vector.end()));
+    }
+    vector.pop_back();
+    expected.pop_back();
+    SECTION("Vector<int>{1} after pop_back should be equal to Vector<int>{}"){
+        REQUIRE(std::equal(expected.begin(),expected.end(), vector.begin(), vector.end()));
+    }
+    SECTION("Vector<int>{} after pop_back should retrun std::nullopt"){
+        auto result = vector.pop_back();
+        REQUIRE(!result.has_value());
     }
 }

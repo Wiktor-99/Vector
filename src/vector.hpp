@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <iterator>
 #include <stdexcept> 
+#include <initializer_list>
 
 template <typename T, typename Allocator = std::allocator<T>>
 class Vector {
@@ -76,6 +77,14 @@ class Vector {
         }
         new (end_) T(std::move(value));
         end_++;
+    }
+    std::optional<value_type> pop_back(){
+        if(size() > 0){
+            end_ -= 1;
+            value_type temp = *end_;
+            return temp;  
+        }
+        return std::nullopt;
     }
     value_type &front() { return *first_; }
     value_type &back() { return *(end_ - 1); }
