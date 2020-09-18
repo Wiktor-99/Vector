@@ -50,6 +50,11 @@ class Vector {
             ptr_ -= value;
             return *this;
         }
+        myIteratorImpl operator+(int value) {
+            myIteratorImpl result(ptr_);
+            result.ptr_ += value;
+            return result;
+        }
 
       private:
         pointer ptr_;

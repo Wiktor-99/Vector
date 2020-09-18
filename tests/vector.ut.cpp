@@ -304,3 +304,13 @@ TEST_CASE("Iterator end -= 2 should with * operator should be equal to 5") {
         REQUIRE(*cit == 5);
     }
 }
+TEST_CASE("Iterator *(begin() + 2) should with * operator should be equal to 3") {
+    Vector<int> vec{1, 2, 3, 4, 5, 6};
+
+    SECTION("Iterator *(begin() + 2) should be equal to 3") {
+        REQUIRE(*(vec.begin()+2) == 3);
+    }
+    SECTION("Const_iterator *(begin() + 2) should be equal to 3") {
+        REQUIRE(*(vec.cbegin()+2) == 3);
+    }
+}
