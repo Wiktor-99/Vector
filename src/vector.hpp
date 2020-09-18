@@ -60,11 +60,14 @@ class Vector {
             result.ptr_ -= value;
             return result;
         }
-        bool operator==(myIteratorImpl other)const {
+        bool operator==(myIteratorImpl other) const {
             return (ptr_ == other.ptr_);
         }
-        bool operator!=(myIteratorImpl other)const {
+        bool operator!=(myIteratorImpl other) const {
             return !(*this == other);
+        }
+        std::ptrdiff_t operator-(myIteratorImpl other) {
+            return ptr_ - other.ptr_;
         }
 
       private:
