@@ -278,33 +278,33 @@ TEST_CASE("Iterator to end and --Iterator and Iterator-- should give last elemen
         REQUIRE(*cit == 6);
     }
 }
-TEST_CASE("Iterator begin += 3 should with * operator should be equal to 4") {
+TEST_CASE("Iterator begin += 3  with * operator should be equal to 4") {
     Vector<int> vec{1, 2, 3, 4, 5, 6};
     Vector<int>::iterator it = vec.begin();
     Vector<int>::const_iterator cit = vec.cbegin();
-    SECTION("Iterator begin += 3 should with * operator should be equal to 4") {
+    SECTION("Iterator begin += 3 with * operator should be equal to 4") {
         it += 3;
         REQUIRE(*it == 4);
     }
-    SECTION("Const_iterator begin += 3 should with * operator should be equal to 4") {
+    SECTION("Const_iterator begin += 3 with * operator should be equal to 4") {
         cit += 3;
         REQUIRE(*cit == 4);
     }
 }
-TEST_CASE("Iterator end -= 2 should with * operator should be equal to 5") {
+TEST_CASE("Iterator end -= 2  with * operator should be equal to 5") {
     Vector<int> vec{1, 2, 3, 4, 5, 6};
     Vector<int>::iterator it = vec.end();
     Vector<int>::const_iterator cit = vec.cend();
-    SECTION("Iterator end -= 2 should with * operator should be equal to 5") {
+    SECTION("Iterator end -= 2  with * operator should be equal to 5") {
         it -= 2;
         REQUIRE(*it == 5);
     }
-    SECTION("Const_iterator end -= 2 should with * operator should be equal to 5") {
+    SECTION("Const_iterator end -= 2  with * operator should be equal to 5") {
         cit -= 2;
         REQUIRE(*cit == 5);
     }
 }
-TEST_CASE("Iterator *(begin() + 2) should with * operator should be equal to 3") {
+TEST_CASE("Iterator *(begin() + 2)  should be equal to 3") {
     Vector<int> vec{1, 2, 3, 4, 5, 6};
 
     SECTION("Iterator *(begin() + 2) should be equal to 3") {
@@ -312,5 +312,14 @@ TEST_CASE("Iterator *(begin() + 2) should with * operator should be equal to 3")
     }
     SECTION("Const_iterator *(begin() + 2) should be equal to 3") {
         REQUIRE(*(vec.cbegin()+2) == 3);
+    }
+}
+TEST_CASE("Iterator *(end() - 3) should be equal to 4") {
+    Vector<int> vec{1, 2, 3, 4, 5, 6};
+    SECTION("Iterator *(end() - 3) should be equal to 4") {
+        REQUIRE(*(vec.end()-3) == 4);
+    }
+    SECTION("Const_iterator *(end() - 3) should be equal to 4") {
+         REQUIRE(*(vec.cend()-3) == 4);
     }
 }
