@@ -325,17 +325,31 @@ TEST_CASE("Iterator *(end() - 3) should be equal to 4") {
 }
 TEST_CASE("Vector.begin() and Vector.end() should be equal for empty vector and not equal for vector with elements") {
     Vector<int> empty;
-    Vector<int> notEmpty{1,2,3,4};
-    SECTION("Vector.begin() and Vector.end() should be equal for empty vector, compared by == "){
+    Vector<int> notEmpty{1, 2, 3, 4};
+    SECTION("Vector.begin() and Vector.end() should be equal for empty vector, compared by == ") {
         REQUIRE(empty.begin() == empty.end());
     }
-    SECTION("Vector.begin() and Vector.end() should be equal for empty vector, compared by != "){
+    SECTION("Vector.begin() and Vector.end() should be equal for empty vector, compared by != ") {
         REQUIRE_FALSE(empty.begin() != empty.end());
     }
-    SECTION("Vector.begin() and Vector.end() should not  be equal for vector with element, compared by == "){
+    SECTION("Vector.begin() and Vector.end() should not  be equal for vector with element, compared by == ") {
         REQUIRE_FALSE(notEmpty.begin() == notEmpty.end());
     }
-    SECTION("Vector.begin() and Vector.end() should not be equal for vector with elements, compared by != "){
+    SECTION("Vector.begin() and Vector.end() should not be equal for vector with elements, compared by != ") {
         REQUIRE(notEmpty.begin() != notEmpty.end());
+    }
+}
+
+TEST_CASE("Inserting Vector<int> vector{1,2,3}  with invalid iterators shoudl give empty iterator.") {
+    Vector<int> vector{1, 2, 3};
+    SECTION("Iterator below lower bound.") {
+        const auto it = vector.insert(vector.begin() - 5, 5);
+        const Vector<int>::iterator it2;
+        REQUIRE(it == it2);
+    }
+     SECTION("Iterator over upper bound.") {
+        const auto it = vector.insert(vector.end() + 5, 5);
+        const Vector<int>::iterator it2;
+        REQUIRE(it == it2);
     }
 }

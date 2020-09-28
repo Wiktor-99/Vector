@@ -176,6 +176,26 @@ class Vector {
     }
     const_iterator cend() const { return const_iterator(end_); }
 
+    iterator insert(iterator it, const value_type &value) {
+        const std::size_t distance = std::distance((*this).begin(), it);
+        if(distance < 0 || distance > size()){
+            return iterator();
+        }
+        if (it == end()) {
+            push_back(value);
+            return it;
+        }
+        if (capacity() == size()) {
+            makeBigger();
+        }
+        end_++;
+        for (std::size_t i = size() - 1; i > distance; --i) {
+            first_[i] = std::move(first_[i - 1]);
+        }
+        new (first_ + distance) T(std::move(value));
+        return it;
+    }
+
   private:
     void changeSize(std::size_t newSize, std::size_t newCapacity) {
         auto oldSize = size();
