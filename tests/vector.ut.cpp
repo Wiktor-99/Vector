@@ -50,8 +50,8 @@ TEST_CASE("Contructed Vectro<int>(5, random_value) should match with std::vectro
     REQUIRE(std::equal(vector.begin(), vector.end(), expected.begin(), expected.end()));
 }
 TEST_CASE("Copy ctor, expression Vector<int> vec1(5,6) Vector<int> vec2(ve1) should give same values, size and capacity.") {
-    Vector<int> vec1(5, 6);
-    Vector<int> vec2(vec1);
+    const Vector<int> vec1(5, 6);
+    const Vector<int> vec2(vec1);
     SECTION("Vectors should be equal on range.") {
         REQUIRE(std::equal(vec1.begin(), vec1.end(), vec2.begin(), vec2.end()));
     }
@@ -63,10 +63,10 @@ TEST_CASE("Copy ctor, expression Vector<int> vec1(5,6) Vector<int> vec2(ve1) sho
     }
 }
 
-TEST_CASE("Move ctor should move all meber values(pointers) to resul vector. Moved vector should be clear (size = 0 and capacity = 0 ).") {
-    Vector<int> vector(4, 8);
-    Vector<int> result(std::move(vector));
-    Vector<int> expected(4, 8);
+TEST_CASE("Move ctor should move all meber values(pointers) to result vector. Moved vector should be clear (size = 0 and capacity = 0 ).") {
+    const Vector<int> vector(4, 8);
+    const Vector<int> result(std::move(vector));
+    const Vector<int> expected(4, 8);
     SECTION("Vectors should not be equal.") {
         REQUIRE_FALSE(std::equal(vector.begin(), vector.end(), result.begin(), result.end()));
     }
@@ -81,7 +81,7 @@ TEST_CASE("Move ctor should move all meber values(pointers) to resul vector. Mov
     }
 }
 TEST_CASE("Copy assignment operator, expression Vector<int> vec1(5,6) Vector<int> vec2(ve1) should give same values, size and capacity.") {
-    Vector<int> vec1(5, 6);
+    const Vector<int> vec1(5, 6);
     Vector<int> vec2;
     vec2 = vec1;
     SECTION("Vectors should be equal on range.") {
@@ -94,10 +94,10 @@ TEST_CASE("Copy assignment operator, expression Vector<int> vec1(5,6) Vector<int
         REQUIRE(vec1.capacity() == vec2.capacity());
     }
 }
-TEST_CASE("Move assignment operator should move all meber values(pointers) to resul vector. Moved vector should be clear (size = 0 and capacity = 0 ).") {
-    Vector<int> vector(4, 8);
+TEST_CASE("Move assignment operator should move all member values(pointers) to result vector. Moved vector should be clear (size = 0 and capacity = 0 ).") {
+    const Vector<int> vector(4, 8);
     Vector<int> result;
-    Vector<int> expected(4, 8);
+    const Vector<int> expected(4, 8);
     result = std::move(vector);
     SECTION("Vectors should not be equal.") {
         REQUIRE_FALSE(std::equal(vector.begin(), vector.end(), result.begin(), result.end()));
