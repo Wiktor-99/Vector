@@ -15,15 +15,15 @@ TEST_CASE("Default ctor of Vector<int> should allocate give vectro.size() = 0 an
     }
 }
 
-TEST_CASE("Construct Vector with Vector<int>(random_number) vector size sholud be equal to random_number and contain only 0 values") {
+TEST_CASE("Construct Vector with Vector<int>(random_number) vector size should be equal to random_number and contain only 0 values") {
     std::random_device rd;
     std::mt19937 e{rd()};
 
     std::uniform_int_distribution<std::size_t> dist{
         1, 10000};
-    std::size_t random_number = dist(e);
-    Vector<int> vector(random_number);
-    std::vector<int> expected(random_number);
+    const std::size_t random_number = dist(e);
+    const Vector<int> vector(random_number);
+    const std::vector<int> expected(random_number);
     SECTION("Vector size sholud be equal to random_number") {
         REQUIRE(vector.size() == random_number);
     }
@@ -43,10 +43,10 @@ TEST_CASE("Contructed Vectro<int>(5, random_value) should match with std::vectro
 
     std::uniform_int_distribution<int> dist{
         1, 100};
-    int random_value = dist(e);
+    const int random_value = dist(e);
 
-    Vector<int> vector(5, random_value);
-    std::vector<int> expected(5, random_value);
+    const Vector<int> vector(5, random_value);
+    const std::vector<int> expected(5, random_value);
     REQUIRE(std::equal(vector.begin(), vector.end(), expected.begin(), expected.end()));
 }
 TEST_CASE("Copy ctor, expression Vector<int> vec1(5,6) Vector<int> vec2(ve1) should give same values, size and capacity.") {
