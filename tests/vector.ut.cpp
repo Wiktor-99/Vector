@@ -64,9 +64,9 @@ TEST_CASE("Copy ctor, expression Vector<int> vec1(5,6) Vector<int> vec2(ve1) sho
 }
 
 TEST_CASE("Move ctor should move all meber values(pointers) to result vector. Moved vector should be clear (size = 0 and capacity = 0 ).") {
-    const Vector<int> vector(4, 8);
-    const Vector<int> result(std::move(vector));
-    const Vector<int> expected(4, 8);
+    Vector<int> vector(4, 8);
+    Vector<int> result(std::move(vector));
+    Vector<int> expected(4, 8);
     SECTION("Vectors should not be equal.") {
         REQUIRE_FALSE(std::equal(vector.begin(), vector.end(), result.begin(), result.end()));
     }
@@ -95,9 +95,9 @@ TEST_CASE("Copy assignment operator, expression Vector<int> vec1(5,6) Vector<int
     }
 }
 TEST_CASE("Move assignment operator should move all member values(pointers) to result vector. Moved vector should be clear (size = 0 and capacity = 0 ).") {
-    const Vector<int> vector(4, 8);
+    Vector<int> vector(4, 8);
     Vector<int> result;
-    const Vector<int> expected(4, 8);
+    Vector<int> expected(4, 8);
     result = std::move(vector);
     SECTION("Vectors should not be equal.") {
         REQUIRE_FALSE(std::equal(vector.begin(), vector.end(), result.begin(), result.end()));
@@ -112,7 +112,7 @@ TEST_CASE("Move assignment operator should move all member values(pointers) to r
         REQUIRE(std::equal(result.begin(), result.end(), expected.begin(), expected.end()));
     }
 }
-TEST_CASE("Vector push_back method test, for default ctor and push_back method size shuld be equal  1 and capacity 4") {
+TEST_CASE("Vector push_back method test, for default ctor and push_back method size should be equal  1 and capacity 4") {
     Vector<int> vector;
     int x = 1;
     vector.push_back(x);
@@ -123,18 +123,7 @@ TEST_CASE("Vector push_back method test, for default ctor and push_back method s
         REQUIRE(vector.capacity() == 4);
     }
 }
-TEST_CASE("Vector push_back when size(5) is equal capacity(5) should resize to size+1(6) and capcity x 2(10) ") {
-    Vector<int> vector;
-    int x = 1;
-    vector.push_back(x);
-    SECTION("Vector size sholud be equal 1") {
-        REQUIRE(vector.size() == 1);
-    }
-    SECTION("Vector capacity sholud be equal 4") {
-        REQUIRE(vector.capacity() == 4);
-    }
-}
-TEST_CASE("Vector push_back(for r-value) method test, for default ctor and push_back method size shuld be equal  1 and capacity 4") {
+TEST_CASE("Vector push_back(for r-value) method test, for default ctor and push_back method size should be equal  1 and capacity 4") {
     Vector<int> vector;
     vector.push_back(1);
     SECTION("Vector size sholud be equal 1") {
@@ -147,10 +136,10 @@ TEST_CASE("Vector push_back(for r-value) method test, for default ctor and push_
 TEST_CASE("Vector push_back(for r-value) when size(5) is equal capacity(5) should resize to size+1(6) and capcity x 2(10)") {
     Vector<int> vector(5, 1);
     vector.push_back(1);
-    SECTION("Vector size sholud be equal 1") {
+    SECTION("Vector size should be equal 1") {
         REQUIRE(vector.size() == 6);
     }
-    SECTION("Vector capacity sholud be equal 4") {
+    SECTION("Vector capacity should be equal 4") {
         REQUIRE(vector.capacity() == 10);
     }
 }
@@ -185,10 +174,9 @@ TEST_CASE("Vector operator[] with index control for Vector<int> vector(1,2,3,5) 
         REQUIRE_THROWS(vector[5]);
     }
 }
-TEST_CASE("Vector ctor initializer_list{1,2,3} should construct vector that contains {1,2,3,4}") {
-    std::initializer_list<int> list{1, 2, 3};
-    std::vector<int> expected(list);
-    Vector<int> vector(list);
+TEST_CASE("Vector ctor initializer_list{1,2,3} should construct vector that contains {1,2,3}") {
+    const std::initializer_list<int> list{1, 2, 3};
+    const Vector<int> vector(list);
     SECTION("vector[0] should be equal 1") {
         REQUIRE(vector[0] == 1);
     }
@@ -347,7 +335,7 @@ TEST_CASE("Inserting Vector<int> vector{1,2,3}  with invalid iterators shoudl gi
         const Vector<int>::iterator it2;
         REQUIRE(it == it2);
     }
-     SECTION("Iterator over upper bound.") {
+    SECTION("Iterator over upper bound.") {
         const auto it = vector.insert(vector.end() + 5, 5);
         const Vector<int>::iterator it2;
         REQUIRE(it == it2);
